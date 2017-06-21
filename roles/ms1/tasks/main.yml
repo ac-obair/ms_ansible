@@ -1,0 +1,17 @@
+- name: get sha
+  local_action: shell git log -1 --format="format:%h"
+  register: git_sha
+
+- name: set fact
+  set_fact:
+    gitsha: "{{ git_sha.stdout }}" 
+
+- name: Generate nginx conf with container version
+  template: src=service.conf.j2 dest=../conf/service.conf
+  tags:
+    - deploy
+
+- name: Generate stack file deployment file
+  template: src=ms_stack.yml.j2 dest=../ms_stack.yml
+  tags:
+    - deploy

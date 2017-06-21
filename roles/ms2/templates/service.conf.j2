@@ -1,0 +1,25 @@
+server {
+  listen 6000;
+  #ssl on;
+
+  #ssl_certificate /etc/ngi;
+  #ssl_certificate_key /etc/ngi;
+
+  access_log  /var/log/nginx/ms1/access.log;
+  error_log  /var/log/nginx/ms1/error.log  error;
+
+  error_page 404 /404.html;
+     location = /40x.html {
+  }
+
+  error_page 500 502 503 504 /50x.html;
+      location = /50x.html {
+  }
+
+  location / {
+    add_header Content-Type text/plain;
+    return 200 "Service OK on {{ gitsha }}";
+ }
+
+}
+

@@ -1,0 +1,32 @@
+version: "3.1"
+
+services:
+  nginx:
+    image: devregistry.arnoldclark.com/dev/team/ms1/nginx:{{ gitsha }}
+    command: ["-g", "pid /var/run/nginx.pid;daemon off;"]
+    #command: -g "pid /var/run/nginx.pid;daemon off;"
+    ports:
+      - "6000:6000"
+    networks:
+      - nginx
+      - httpd
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+         condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+      labels:
+        - "descr=mock_service"
+        - "gitsha={{ gitsha }}"
+        - "release=latest"
+      placement:
+        constraints:
+          - node.role == worker
+networks:
+  nginx:
+    external: false
+  httpd:
+    external: false

@@ -1,0 +1,3 @@
+[build_agent]
+localhost ansible_connection=local
+

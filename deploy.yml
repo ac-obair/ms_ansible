@@ -1,0 +1,13 @@
+---
+- hosts: build_agent
+  connection: local
+  name: Set up local deployment files
+  roles:
+    - ms1
+
+- hosts: build_agent
+  connection: local
+  name: Set up local deployment files
+  roles:
+    - ms2
+
